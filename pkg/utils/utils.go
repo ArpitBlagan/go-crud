@@ -1,15 +1,22 @@
 package utils
 
-import {
+import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-}
+)
 
-function ParseBody(r *http.Request,X interface{}){
-	if body,err:=ioutil.ReadAll(r:Body);err==nil{
-		if(err):=json.Unmarshal([]byte(body),x);err!=nill{
-			return
-		}
+func ParseBody(r *http.Request,X interface{}){
+	// Read the body of the request
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		// If there was an error reading the body, handle it
+		return
+	}
+
+	// Unmarshal the body into the provided 'x' variable (interface{})
+	if err := json.Unmarshal(body, X); err != nil {
+		// If there was an error unmarshalling the JSON, handle it
+		return
 	}
 }

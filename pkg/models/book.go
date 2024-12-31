@@ -1,22 +1,22 @@
 package models
 
-import{
+import(
 	"github.com/jinzhu/gorm"
 	"go-crud/pkg/config"
-}
+)
 var db *gorm.DB
 
 type Book struct{
-	gorm.Modle
+	gorm.Model
 	Name string `gorm:"json":"name"`
 	Author string `gorm:"json":"author"`
 	Publication string `gorm:"json":"publication"`
 }
 
-function init(){
+func init(){
 	config.Connect()
 	db=config.GetDB()
-	db.AutoMigrate(&Book())
+	db.AutoMigrate(&Book{})
 }
 
 func (b *Book) CreateBook() *Book{
@@ -25,7 +25,7 @@ func (b *Book) CreateBook() *Book{
 	return b;
 }
 
-function GetAllBooks() []Book{
+func GetAllBooks() []Book{
 	var Books []Book
 	db.Find(&Books)
 	return Books
@@ -33,12 +33,12 @@ function GetAllBooks() []Book{
 
 func GetBookById(Id *int64) (*Book, *gorm.DB){
 	var getBook Book
-	db:=db.where("ID?=",Id).Find(&getBook)
+	db:=db.Where("ID?=",Id).Find(&getBook)
 	return &getBook,db
 } 
 
 func DeleteBookById(Id *int64) Book{
 	var book Book
-	db.where("ID?=",Id).Delete(Book)
+	db.Where("ID?=",Id).Delete(&book)
 	return book
 }
